@@ -24,15 +24,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      
+      - name: Set lowercase image name
+        id: image-name
+        shell: bash
+        run: |
+          echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
       - name: Build, push and scan
         id: container
         uses: ./.github/actions/build-and-scan
         with:
-          image_name: ghcr.io/${{ github.repository }}
+          image_name: ${{ steps.image-name.outputs.name }}
           tag: ${{ github.sha }}
           dockerfile: Dockerfile
           context: .
           build_args: ""
+
 
       - name: Print image URI
         env:
