@@ -1,0 +1,14 @@
+
+name: Pull Request Infrastructure Check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-infrastructure:
+    uses: ./.github/workflows/infra-check.yml
+    with:
+      working_dir: infra
