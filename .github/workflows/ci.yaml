@@ -35,4 +35,6 @@ jobs:
           build_args: ""
 
       - name: Print image URI
-        run: echo "Published image: ${{ steps.container.outputs.image_uri }}"
+        env:
+          IMAGE_URI: ${{ steps.container.outputs.image_uri }}
+        run: 'echo "Published image: $IMAGE_URI"'
